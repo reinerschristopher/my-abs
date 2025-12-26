@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORE TRAINER</title>
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gray: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: "Courier New", Courier, monospace;
+            border-radius: 0 !important; /* Forces non-rounded corners */
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            max-width: 400px;
+            border-bottom: 2px solid var(--black);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        h1 { font-size: 1.5rem; margin: 0; text-transform: uppercase; }
+
+        /* Timer Section */
+        #timer-container {
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid var(--black);
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #display { font-size: 2.5rem; font-weight: bold; margin-bottom: 10px; }
+
+        button {
+            background: var(--white);
+            border: 1px solid var(--black);
+            padding: 10px 15px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        button:active { background: var(--black); color: var(--white); }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--black);
+            border-bottom: none;
+            background: var(--gray);
+        }
+
+        .tab-btn.active {
+            background: var(--white);
+            border-bottom: 2px solid var(--white);
+            z-index: 1;
+        }
+
+        /* Workout Content */
+        .workout-content {
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid var(--black);
+            padding: 20px;
+            display: none;
+        }
+
+        .workout-content.active { display: block; }
+
+        .exercise-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--gray);
+            padding-bottom: 10px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        input[type="checkbox"] {
+            width: 25px;
+            height: 25px;
+            accent-color: var(--black);
+        }
+
+        .info-btn {
+            font-size: 0.7rem;
+            padding: 2px 5px;
+            margin-left: 10px;
+        }
+
+        .details {
+            display: none;
+            font-size: 0.85rem;
+            background: #f9f9f9;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px dashed var(--black);
+        }
+
+        .reset-btn { margin-top: 20px; width: 100%; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>CORE_PROG_V1</h1>
+    </header>
+
+    <div id="timer-container">
+        <div id="display">00:00</div>
+        <button onclick="startTimer()">Start</button>
+        <button onclick="stopTimer()">Stop</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('A')">WORKOUT A</button>
+        <button class="tab-btn" onclick="openTab('B')">WORKOUT B</button>
+    </div>
+
+    <div id="workoutA" class="workout-content active">
+        <div class="exercise-item">
+            <div class="row">
+                <span>1. DEAD BUGS (3x12)</span>
+                <input type="checkbox" id="a1">
+            </div>
+            <button class="info-btn" onclick="toggleDetails('d1')">INFO</button>
+            <div id="d1" class="details">Slow tempo. 191cm height = heavy legs. Glue lower back to floor. No gaps.</div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="row">
+                <span>2. BICYCLE CRUNCH (3x20)</span>
+                <input type="checkbox" id="a2">
+            </div>
+            <button class="info-btn" onclick="toggleDetails('d2')">INFO</button>
+            <div id="d2" class="details">Don't pull neck. Rotate from ribs. 1s hold at peak contraction.</div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="row">
+                <span>3. REVERSE CRUNCH (3x15)</span>
+                <input type="checkbox" id="a3">
+            </div>
+            <button class="info-btn" onclick="toggleDetails('d3')">INFO</button>
+            <div id="d3" class="details">Lift hips using lower abs only. Avoid using leg momentum.</div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="row">
+                <span>4. HOLLOW HOLD (3xMAX)</span>
+                <input type="checkbox" id="a4">
+            </div>
+            <button class="info-btn" onclick="toggleDetails('d4')">INFO</button>
+            <div id="d4" class="details">Arms back, legs out. If back arches, raise legs higher. </div>
+        </div>
+    </div>
+
+    <div id="workoutB" class="workout-content">
+        <div class="exercise-item">
+            <div class="row">
+                <span>1. LONG PLANK (3x60s)</span>
+                <input type="checkbox" id="b1">
+            </div>
+            <button class="info-btn" onclick="toggleDetails('d5')">INFO</button>
+            <div id="d5" class="details">Elbows forward of shoulders. Pull belly button to spine.</div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="row">
+                <span>2. BIRD-DOG (3x10 L/R)</span>
+                <input type="checkbox" id="b2">
+            </div>
+            <button class="info-btn" onclick="toggleDetails('d6')">INFO</button>
+            <div id="d6" class="details">Opposite arm/leg. Zero hip wobble. Flat back.</div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="row">
+                <span>3. SIDE PLANK (3x45s)</span>
+                <input type="checkbox" id="b3">
+            </div>
+            <button class="info-btn" onclick="toggleDetails('d7')">INFO</button>
+            <div id="d7" class="details">Stack feet. Lift hips high. Don't let shoulder dip.</div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="row">
+                <span>4. GLUTE BRIDGE (2x20)</span>
+                <input type="checkbox" id="b4">
+            </div>
+            <button class="info-btn" onclick="toggleDetails('d8')">INFO</button>
+            <div id="d8" class="details">Squeeze glutes at top. Supports the long spine.</div>
+        </div>
+    </div>
+
+    <button class="reset-btn" onclick="clearChecks()">CLEAR ALL PROGRESS</button>
+
+    <script>
+        // Tab Logic
+        function openTab(tabName) {
+            document.querySelectorAll('.workout-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('workout' + tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Info Toggle
+        function toggleDetails(id) {
+            const el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Timer Logic
+        let timer;
+        let seconds = 0;
+        function startTimer() {
+            if(timer) return;
+            timer = setInterval(() => {
+                seconds++;
+                let m = Math.floor(seconds / 60).toString().padStart(2, '0');
+                let s = (seconds % 60).toString().padStart(2, '0');
+                document.getElementById('display').innerText = m + ":" + s;
+            }, 1000);
+        }
+        function stopTimer() { clearInterval(timer); timer = null; }
+        function resetTimer() { stopTimer(); seconds = 0; document.getElementById('display').innerText = "00:00"; }
+
+        // LocalStorage Logic
+        const checks = document.querySelectorAll('input[type="checkbox"]');
+        checks.forEach(check => {
+            check.addEventListener('change', () => {
+                localStorage.setItem(check.id, check.checked);
+            });
+            // Load state
+            const saved = localStorage.getItem(check.id);
+            if (saved === 'true') check.checked = true;
+        });
+
+        function clearChecks() {
+            if(confirm("Clear progress?")) {
+                checks.forEach(c => {
+                    c.checked = false;
+                    localStorage.removeItem(c.id);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
